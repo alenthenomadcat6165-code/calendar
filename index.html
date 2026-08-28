@@ -11,22 +11,21 @@
   <div class="app-shell">
     <aside class="nav-panel" id="navPanel">
       <div class="profile">
-        <div class="avatar" aria-hidden="true">G</div>
-        <div><strong>Grubby</strong><span>Personal calendar</span></div>
+        <div class="avatar" id="profileAvatar" aria-hidden="true">G</div>
+        <div><strong id="profileName">Grubby</strong><span>Personal calendar</span></div>
       </div>
       <nav aria-label="Main navigation">
-        <button class="nav-item active" data-section="Overview"><span>⌂</span> Overview</button>
-        <button class="nav-item" data-section="Coming up"><span>◷</span> Coming up</button>
+        <button class="nav-item active" id="overviewButton"><span>⌂</span> Overview</button>
         <button class="nav-item" id="editDates"><span>✎</span> Edit dates</button>
         <button class="nav-item" id="navAddEvent"><span>＋</span> Add event</button>
-        <button class="nav-item" data-section="Settings"><span>⚙</span> Settings</button>
+        <button class="nav-item" id="accountSettings"><span>⚙</span> Account settings</button>
       </nav>
       <div class="sidebar-note"><span class="note-mark"></span><div><strong>Keep it simple</strong><p>One clear week at a time.</p></div></div>
     </aside>
 
     <main>
       <header class="topbar">
-        <div><p class="eyebrow">MY CALENDAR</p><h1>Good morning, Grubby.</h1><p class="subtitle">Here’s what your week looks like.</p></div>
+        <div><p class="eyebrow">MY CALENDAR</p><h1 id="welcomeTitle">Good morning, Grubby.</h1><p class="subtitle">Here’s what your week looks like.</p></div>
         <div class="header-actions"><button class="secondary-btn" id="shareCalendar"><span>↗</span> Send calendar</button><button class="primary-btn" id="headerAddEvent"><span>＋</span> Add event</button></div>
       </header>
 
@@ -104,6 +103,19 @@
       <div class="share-list-head"><strong>Visible events</strong><button type="button" class="text-btn" id="toggleAllEvents">Select all</button></div>
       <div class="share-event-list" id="shareEventList"></div>
       <div class="modal-actions"><button class="secondary-btn" id="cancelShare" type="button">Cancel</button><button class="primary-btn" id="sendShare" type="submit">Send link</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="accountDialog" class="account-dialog">
+    <form id="accountForm">
+      <div class="modal-head"><div><p class="eyebrow">ACCOUNT SETTINGS</p><h2>Your calendar account</h2></div></div>
+      <div class="account-picture-row"><div class="account-picture" id="accountPicturePreview">G</div><label class="secondary-btn picture-button">Choose picture<input id="accountPicture" type="file" accept="image/*" hidden></label></div>
+      <label>Display name<input id="accountName" required placeholder="Your name"></label>
+      <label>Email<input id="accountEmail" type="email" placeholder="name@example.com"></label>
+      <div class="form-row"><label>Week starts<select id="accountWeekStart"><option value="sunday">Sunday</option><option value="monday">Monday</option></select></label><label>Time zone<select id="accountTimezone"><option>Pacific Time</option><option>Mountain Time</option><option>Central Time</option><option>Eastern Time</option></select></label></div>
+      <div class="account-switcher"><strong>Switch accounts</strong><div id="accountList"></div><button class="text-btn" id="showCreateAccount" type="button">＋ Create another account</button></div>
+      <div class="create-account" id="createAccountFields"><label>New account name<input id="newAccountName" placeholder="Name"></label><label>New account email<input id="newAccountEmail" type="email" placeholder="Email"></label><button class="secondary-btn" id="createAccount" type="button">Create blank account</button></div>
+      <div class="modal-actions"><button class="secondary-btn" id="cancelAccount" type="button">Cancel</button><button class="primary-btn" type="submit">Save account</button></div>
     </form>
   </dialog>
 
