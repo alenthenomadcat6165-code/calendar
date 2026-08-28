@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Daymark — a calm, clear calendar for simple planning.">
+  <title>Daymark Calendar</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="nav-panel" id="navPanel">
+      <div class="profile">
+        <div class="avatar" aria-hidden="true">G</div>
+        <div><strong>Grubby</strong><span>Personal calendar</span></div>
+      </div>
+      <nav aria-label="Main navigation">
+        <button class="nav-item active" data-section="Overview"><span>⌂</span> Overview</button>
+        <button class="nav-item" data-section="Coming up"><span>◷</span> Coming up</button>
+        <button class="nav-item" id="editDates"><span>✎</span> Edit dates</button>
+        <button class="nav-item" id="navAddEvent"><span>＋</span> Add event</button>
+        <button class="nav-item" data-section="Settings"><span>⚙</span> Settings</button>
+      </nav>
+      <div class="sidebar-note"><span class="note-mark"></span><div><strong>Keep it simple</strong><p>One clear week at a time.</p></div></div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <div><p class="eyebrow">MY CALENDAR</p><h1>Good morning, Grubby.</h1><p class="subtitle">Here’s what your week looks like.</p></div>
+        <div class="header-actions"><button class="secondary-btn" id="shareCalendar"><span>↗</span> Send calendar</button><button class="primary-btn" id="headerAddEvent"><span>＋</span> Add event</button></div>
+      </header>
+
+      <section class="summary-grid" aria-label="Calendar summary">
+        <article class="focus-card">
+          <div class="card-heading"><span>UP NEXT</span><button class="text-btn" id="viewUpcoming">View schedule →</button></div>
+          <div class="next-event">
+            <div class="date-block"><b id="nextDay">23</b><span id="nextMonth">AUG</span></div>
+            <div><span class="event-tag class-tag">CLASS</span><h2 id="nextTitle">Design fundamentals</h2><p id="nextMeta">9:30 AM · North Hall, Room 204</p></div>
+          </div>
+          <div class="countdown"><span></span><p><strong id="countdownText">Tomorrow morning</strong><br><small>Alarm set 30 minutes before</small></p></div>
+        </article>
+
+        <article class="mini-card" id="miniCard">
+          <div class="mini-head">
+            <button class="icon-btn" id="miniPrev" aria-label="Previous month">‹</button>
+            <h2 id="miniMonthLabel">August 2026</h2>
+            <button class="icon-btn" id="miniNext" aria-label="Next month">›</button>
+          </div>
+          <div class="mini-weekdays"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
+          <div class="mini-days" id="miniDays"></div>
+          <button class="expand-btn" id="expandCalendar">Expand calendar <span>↗</span></button>
+        </article>
+      </section>
+
+      <section class="week-section">
+        <div class="section-heading"><div><p class="eyebrow">AUGUST 22–28</p><h2>This week</h2></div><div class="week-controls"><button class="icon-btn">‹</button><button class="today-btn" id="todayBtn">Today</button><button class="icon-btn">›</button></div></div>
+        <div class="week-list" id="weekList"></div>
+      </section>
+    </main>
+  </div>
+
+  <section class="calendar-overlay" id="calendarOverlay" aria-hidden="true">
+    <aside class="category-panel" id="categoryPanel">
+      <div class="overlay-brand"><button class="collapse-btn" id="collapseCategories" aria-label="Collapse categories">‹</button><div><p class="eyebrow">DAYMARK</p><h2>My calendar</h2></div></div>
+      <button class="primary-btn full" id="overlayAddEvent">＋ Add event</button>
+      <div class="category-header"><span>CATEGORIES</span><button id="addCategory" aria-label="Add category">＋</button></div>
+      <div id="categories"></div>
+      <div class="tip"><b>Quick add</b><p>Select a category, then click any day to create an event.</p></div>
+    </aside>
+    <div class="full-calendar">
+      <header class="calendar-toolbar">
+        <button class="round-btn" id="closeCalendar" aria-label="Close full calendar">×</button>
+        <div class="month-navigation"><button class="icon-btn" id="fullPrev">‹</button><h1 id="fullMonthLabel">August 2026</h1><button class="icon-btn" id="fullNext">›</button></div>
+        <button class="today-btn" id="fullToday">Today</button>
+      </header>
+      <div class="full-weekdays"><span>Sunday</span><span>Monday</span><span>Tuesday</span><span>Wednesday</span><span>Thursday</span><span>Friday</span><span>Saturday</span></div>
+      <div class="month-grid" id="monthGrid"></div>
+    </div>
+  </section>
+
+  <dialog id="eventDialog">
+    <form method="dialog" id="eventForm">
+      <div class="modal-head"><div><p class="eyebrow" id="modalEyebrow">NEW EVENT</p><h2 id="modalTitle">Add to your calendar</h2></div></div>
+      <label>Event name<input id="eventName" required placeholder="What’s happening?"></label>
+      <div class="form-row"><label>Date<input id="eventDate" type="date" required></label><label>Time<input id="eventTime" type="time" required value="09:00"></label></div>
+      <label>Category<select id="eventCategory"><option>Class</option><option>Personal</option><option>Church</option><option>Task</option></select></label>
+      <label>Location<div class="location-field"><input id="eventLocation" placeholder="Search for a place or address"><button class="secondary-btn map-btn" id="chooseLocation" type="button">Choose in Maps</button></div><small class="field-help">Enter a place, then open Maps to check or choose the exact location.</small></label>
+      <label>Alarm<select id="eventAlarm"><option>30 minutes before</option><option>10 minutes before</option><option>1 hour before</option><option>None</option></select></label>
+      <details><summary>More information</summary><label>Notes<textarea id="eventNotes" rows="3" placeholder="Add any useful details"></textarea></label></details>
+      <div class="edit-tools" id="editTools"><button class="danger-btn" id="deleteEvent" type="button">Delete event</button><button class="secondary-btn" id="eventDirections" type="button">Directions ↗</button></div>
+      <div class="modal-actions"><button class="secondary-btn" id="cancelEvent" type="button">Cancel</button><button class="primary-btn" id="saveEvent" type="submit">Add event</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="confirmDialog" class="confirm-dialog">
+    <form method="dialog"><span class="confirm-icon">✓</span><h2>Ready to add?</h2><p id="confirmCopy"></p><div class="confirmation-card" id="confirmationCard"></div><div class="modal-actions"><button class="secondary-btn" value="cancel" id="confirmCancel">Cancel</button><button class="secondary-btn" value="edit" id="confirmEdit">Change details</button><button class="primary-btn" value="yes" id="confirmYes">Yes, add it</button></div></form>
+  </dialog>
+
+  <dialog id="shareDialog" class="share-dialog">
+    <form id="shareForm">
+      <div class="modal-head"><div><p class="eyebrow">SEND CALENDAR</p><h2>Choose what they can see</h2></div></div>
+      <p class="share-intro">Only the events you select will appear in the shared calendar.</p>
+      <label>Description for them<textarea id="shareDescription" rows="3" placeholder="For example: Here is my class schedule for this month."></textarea></label>
+      <div class="share-list-head"><strong>Visible events</strong><button type="button" class="text-btn" id="toggleAllEvents">Select all</button></div>
+      <div class="share-event-list" id="shareEventList"></div>
+      <div class="modal-actions"><button class="secondary-btn" id="cancelShare" type="button">Cancel</button><button class="primary-btn" id="sendShare" type="submit">Send link</button></div>
+    </form>
+  </dialog>
+
+  <section class="shared-view" id="sharedView" aria-hidden="true">
+    <header class="shared-header"><div><p class="eyebrow">SHARED CALENDAR</p><h1 id="sharedTitle">Grubby’s calendar</h1><p id="sharedDescription"></p></div><div class="month-navigation"><button class="icon-btn" id="sharedPrev" aria-label="Previous month">‹</button><h2 id="sharedMonthLabel"></h2><button class="icon-btn" id="sharedNext" aria-label="Next month">›</button></div></header>
+    <div class="full-weekdays"><span>Sunday</span><span>Monday</span><span>Tuesday</span><span>Wednesday</span><span>Thursday</span><span>Friday</span><span>Saturday</span></div>
+    <div class="month-grid shared-grid" id="sharedMonthGrid"></div>
+  </section>
+
+  <div class="toast" id="toast" role="status">Event added to your calendar</div>
+  <script src="script.js"></script>
+</body>
+</html>
